@@ -1,0 +1,54 @@
+menu = """ 
+[D] Depositar
+[S] Sacar
+[E] Extrato
+[Q] Sair
+"""
+
+limite = float(500)
+saldo = 0  # Inicialize o saldo com zero
+extrato = {
+    "Extrato": []
+}
+saques = 0
+LIMITE_SAQUES = 3
+
+while True:
+    opcao = input(menu)
+
+    if opcao.upper() == "D":
+        print('Depósito')
+        deposito = float(input("Digite o valor que você deseja depositar: R$ "))
+        if deposito > 0:
+            saldo += deposito
+            extrato["Extrato"].append(f" Depósito: R$ {deposito:.2f}")
+            print("Depósito realizado com sucesso!")
+        else:
+            print("Por favor deposite um valor acima de R$ 0")
+
+    elif opcao.upper() == "S":
+        if saques < LIMITE_SAQUES:
+            print('Saque')
+            saque = float(input("Digite o valor que você deseja sacar: R$ "))
+            if saque <= 500 and saque <= saldo:
+                saldo -= saque
+                extrato["Extrato"].append(f" Saque: R$ {saque:.2f}")
+                print("Saque Realizado com Sucesso!")
+                saques += 1
+            else:
+                print("Seu limite de saque é de R$ 500")
+        else:
+            print("Você ultrapassou o limite diário de 3 saques")
+
+    elif opcao.upper() == "E":
+        print('Extrato')
+        for ExtratoGeral in extrato["Extrato"]:
+            print(ExtratoGeral)
+
+    elif opcao.upper() == "Q":
+        break
+
+    else:
+        print('Opção inválida, por favor selecione outra')
+
+    print(f"Saldo Atual: R$ {saldo:.2f}")
